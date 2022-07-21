@@ -1,0 +1,9 @@
+
+1 ACCT220  MW 11am  12:15am
+2 ACCT220  MW  8am  9:15am
+3 MGMT142  TR  9am  10:15am
+4 MGMT142  TR 12am  1:15pm
+5 MECO121  MW  8am  9:15am
+6 MECO121  MW  5pm  6:15pm
+7 DISC112  TR  8am  9:15am
+8 DISC112  TR  2pm  3:15pm 

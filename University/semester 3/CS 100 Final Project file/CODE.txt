@@ -1,0 +1,130 @@
+#include <iostream>
+#include<iomanip>
+#include <fstream>
+
+using namespace std;
+
+void initial()
+{
+    char yes_no ;
+    cout << "Do you already have zambeel account?(Y/N) " ;
+    cin >> yes_no ;
+
+    string name,login, password ;
+
+    int y_n = 0 ;
+    if (yes_no == 'N')
+    {
+       cout << "Enter your university roll number as login: " ;
+       cin >>  login ;
+       cout << endl ;
+
+        //create new user file
+
+       cout << "Enter password: " ;
+       cin >> password ;
+       //write in users file
+
+       cout << "Congratulations ! Your account has been created. ";
+
+    }
+    else if (yes_no == 'Y')
+    {
+       string in_file_password ;
+
+       cout << "Enter your university roll number as login: " ;
+       cin >>  login ;
+       cout << endl ;
+
+       cout << "Enter password: " ;
+       cin >> password ;
+
+       //search_file
+       //match the password
+
+        ifstream in_file;
+        in_file.open("C:\\Users\\Safiullah\\Desktop\\login.txt");
+        in_file >> in_file_password ;
+
+        if (password != in_file_password)
+        {
+            do
+            {
+                cout << "Please Enter correct password: " ;
+                cin >> password ;
+            }
+            while(password != in_file_password) ;
+        }
+
+
+       //ifstream in_file("C:\\Users\\Safiullah\\Desktop\\login.txt");
+
+    }
+
+
+
+}
+
+
+void course_reader()
+{
+    string sub, day, starting, ending  ;
+    int serial_no = 0 ;
+
+    ifstream in_file;
+    in_file.open("C:\\Users\\Safiullah\\Desktop\\practice.txt");
+
+    for(int i =1 ; i < 9  ; i++)
+    {
+        in_file >> serial_no >> sub >> day >> starting >>  ending ;
+
+        //cout << "Hello world!" << endl ;
+        if(i%2 == 0)
+        {
+            cout << setw(30) << serial_no << " " << sub << " " << day << " " << starting << " - "<< ending << endl;
+        }
+        else
+        {
+            cout << serial_no << " " << sub << " " << day << " " << starting << " - "<< ending ;
+
+        }
+    }
+
+    cout << endl << endl ;
+
+    //Asking a student to select the courses
+
+    int no_of_sub = 0 ;
+
+    cout << "You can take 6 courses at maximum. How many courses do you want to take this semester ?  " ;
+    cin >> no_of_sub ;
+
+    for(int i = 1 ; i <= no_of_sub ; i++)
+    {
+        cout << "Select your course number " << i << "  :  " ;
+        cin >> serial_no ;
+
+        //match the serial numbers in courses file
+
+        //copy all the course information from courses file into the user's file
+
+        //show the courses in shopping cart
+
+    }
+
+
+}
+
+
+
+
+
+
+int main()
+{
+
+    initial() ;
+
+
+    return 0;
+}
