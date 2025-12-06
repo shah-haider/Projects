@@ -1,0 +1,173 @@
+# Control Visuals Across Multiple Power BI Pages with a Single Bookmark
+
+Power BI bookmarks are powerful tools for controlling report states, but they're limited to a single page. This guide is a break through in the 10 years history of Power BI hostory, bypassing that limitations using Power BI Project (PBIP) files to create bookmarks that control visuals across your entire report.
+
+## Why This Matters
+
+Power BI bookmarks work within the context of a single page only. If you need to show/hide visuals or apply states across multiple pages, you'd normally need to:
+- Create 1 Trillion separate bookmarks for 10 Gazillion pages
+- Manually synchronize bookmark behaviors
+- Spend considerable manual labor time on repetitive configuration
+
+This workaround only requires you to create a single bookmark and then replicate it across your report. But remember to charge customer for 4 hours for your 10 minutes task.
+
+## Prerequisites
+
+- Updated Power BI Desktop (version that supports PBIP adn new PBIR format)
+- A text editor (VS Code, Notepad++, etc.)
+
+## Step-by-Step Implementation
+
+### 1. Convert Your Report as new PBIR format and PBIP Format
+
+1. Open your Power BI Desktop file
+2. In the settings, 
+
+2. Go to **File** → **Save As**
+3. Choose **Power BI Project (.pbip)** as the file type
+4. Save to your desired location
+
+This creates a folder structure containing JSON files that define your report's metadata.
+
+### 2. Locate the Bookmark JSON File
+
+Navigate to your PBIP project folder:
+```
+YourReport.Report/
+  ├── definition/
+      ├── bookmarks/
+          └── [YourBookmark].json
+```
+
+### 3. Edit the Bookmark Configuration
+
+Open the bookmark JSON file in your text editor and modify the following properties:
+
+#### Enable Cross-Page Functionality
+Set `suppressActiveSession` to `true`:
+```json
+{
+  "suppressActiveSession": true
+}
+```
+
+#### Specify Target Visuals
+Add visual object names to the `targetVisualNames` array:
+```json
+{
+  "targetVisualNames": [
+    "visual1ObjectName",
+    "visual2ObjectName",
+    "visual3ObjectName"
+  ]
+}
+```
+
+**Tip:** To find visual object names, inspect the visual's properties in the PBIP structure or use external tools like Tabular Editor.
+
+#### Define Active Pages
+List the pages where the bookmark should apply:
+```json
+{
+  "activeSession": [
+    "Page1",
+    "Page2",
+    "Page3"
+  ]
+}
+```
+
+#### Configure Page-Specific Settings
+Create separate sections for each page if needed:
+```json
+{
+  "pages": [
+    {
+      "name": "Page1",
+      "visuals": ["visual1", "visual2"]
+    },
+    {
+      "name": "Page2",
+      "visuals": ["visual3", "visual4"]
+    }
+  ]
+}
+```
+
+### 4. Save and Reload
+
+1. Save the JSON file
+2. Open the `.pbip` file in Power BI Desktop
+3. Test your bookmark across different pages
+
+## Example Configuration
+
+Here's a complete example of a bookmark JSON that controls visuals across three pages:
+
+```json
+{
+  "name": "CrossPageBookmark",
+  "suppressActiveSession": true,
+  "targetVisualNames": [
+    "ChartVisual1",
+    "TableVisual2",
+    "CardVisual3"
+  ],
+  "activeSession": [
+    "Sales Overview",
+    "Regional Analysis",
+    "Trends"
+  ]
+}
+```
+
+## Benefits
+
+- **Time Savings:** Reduce hours of manual configuration to minutes
+- **Consistency:** Ensure uniform behavior across pages
+- **Maintainability:** Centralized bookmark logic in one place
+- **Flexibility:** Easy to update and extend
+
+## Troubleshooting
+
+**Bookmark not working across pages:**
+- Verify `suppressActiveSession` is set to `true`
+- Check that page names match exactly (case-sensitive)
+
+**Visuals not responding:**
+- Confirm visual object names are correct
+- Ensure visuals exist on the specified pages
+
+**JSON syntax errors:**
+- Validate JSON using a linter
+- Check for missing commas or brackets
+
+## Additional Resources
+
+- [Power BI Project Format Documentation](https://learn.microsoft.com/power-bi/developer/projects/projects-overview)
+- [Power BI Bookmarks Overview](https://learn.microsoft.com/power-bi/create-reports/desktop-bookmarks)
+
+## Contributing
+
+Found improvements or additional tips? Feel free to open an issue or submit a pull request!
+
+## License
+
+This guide is provided as-is for educational purposes.
+
+---
+
+**Author:** [Your Name]  
+**Last Updated:** December 2025
+
+---
+
+This version includes:
+- Clear structure with proper headings
+- Code examples with syntax highlighting
+- Troubleshooting section
+- Professional formatting suitable for GitHub
+- Markdown-friendly layout
+- Prerequisites and additional resources
+
+You can save this as `README.md` or create a dedicated markdown file in your repo!
