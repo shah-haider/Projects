@@ -5,7 +5,7 @@ Power BI bookmarks are powerful tools for controlling report states, but they're
 ## Why This Matters
 
 Power BI bookmarks work within the context of a single page only. If you need to show/hide visuals or apply states across multiple pages, you'd normally need to:
-- Create 1 Trillion separate bookmarks for 10 Gazillion pages
+- Create 100 separate bookmarks for 10 pages
 - Manually synchronize bookmark behaviors
 - Spend considerable manual labor time on repetitive configuration
 
@@ -21,8 +21,8 @@ This workaround only requires you to create a single bookmark and then replicate
 ### 1. Convert Your Report as new PBIR format and PBIP Format
 
 1. Open your Power BI Desktop file
-2. In the Preview features in settings, enable **Power Bl Project (.pbip) save** and **Store PBIX reports using enhanced metadata format (PBIR) options**. In the Report settings in Settings, enable **Copy object names when right clicking on report objects** .
-3. Press Ctrl+S and Upgrade your report format into Power Bl Report enhanced format (PBIR) from PBIR-Legacy format.
+2. In the Preview features in settings, enable **Power Bl Project (.pbip) save** and **Store PBIX reports using enhanced metadata format (PBIR) options**. In the Report settings in Settings, enable **Copy object names when right clicking on report objects** 
+3. Press Ctrl+S and Upgrade your report format into Power Bl Report enhanced format (PBIR) from PBIR-Legacy format
 4. Go to **File** → **Save As** and hoose **Power BI Project (.pbip)** as the file type and save to your desired location
 
 This creates a folder structure containing JSON files that define your report's metadata.
@@ -83,7 +83,7 @@ Create separate sections for each page:
 ### 4. Save and Reload
 
 1. Save the bookmark JSON file
-2. Open the `.pbip` file in Power BI Desktop
+2. Open the `.pbip` (shortcut to pbir) file in Power BI Desktop from your Power BI project folder
 3. Test your bookmark across different pages
 
 
