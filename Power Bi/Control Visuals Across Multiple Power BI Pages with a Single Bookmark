@@ -21,11 +21,9 @@ This workaround only requires you to create a single bookmark and then replicate
 ### 1. Convert Your Report as new PBIR format and PBIP Format
 
 1. Open your Power BI Desktop file
-2. In the settings, 
-
-2. Go to **File** → **Save As**
-3. Choose **Power BI Project (.pbip)** as the file type
-4. Save to your desired location
+2. In the Preview features in settings, enable **Power Bl Project (.pbip) save** and **Store PBIX reports using enhanced metadata format (PBIR) options**. In the Report settings in Settings, enable **Copy object names when right clicking on report objects** .
+3. Press Ctrl+S and Upgrade your report format into Power Bl Report enhanced format (PBIR) from PBIR-Legacy format.
+4. Go to **File** → **Save As** and hoose **Power BI Project (.pbip)** as the file type and save to your desired location
 
 This creates a folder structure containing JSON files that define your report's metadata.
 
@@ -36,97 +34,63 @@ Navigate to your PBIP project folder:
 YourReport.Report/
   ├── definition/
       ├── bookmarks/
-          └── [YourBookmark].json
+          └── [BookMarkObjectName].json
 ```
+[Your PowerBI Project folder]\[ReportName].Report\definition\bookmarks\[BookMarkObjectName].bookmark.json
+
 
 ### 3. Edit the Bookmark Configuration
 
 Open the bookmark JSON file in your text editor and modify the following properties:
 
 #### Enable Cross-Page Functionality
-Set `suppressActiveSession` to `true`:
+Ensure that bookmark in Power BI report is not enabled to work only on Current page, or set `suppressActiveSession` to `true` in JSON file of bookmark:
 ```json
-{
-  "suppressActiveSession": true
-}
+    "suppressActiveSection": true,
 ```
 
 #### Specify Target Visuals
 Add visual object names to the `targetVisualNames` array:
 ```json
-{
   "targetVisualNames": [
     "visual1ObjectName",
     "visual2ObjectName",
     "visual3ObjectName"
   ]
-}
 ```
 
-**Tip:** To find visual object names, inspect the visual's properties in the PBIP structure or use external tools like Tabular Editor.
+**Tip:** To find visual object names, copy object name by right-clicking visuals in Power BI desktop, inspect the visual's properties in the PBIP structure or use Tabular Editor.
 
 #### Define Active Pages
 List the pages where the bookmark should apply:
 ```json
-{
-  "activeSession": [
-    "Page1",
-    "Page2",
-    "Page3"
-  ]
-}
+    "activeSection": "Page1ObjectName,Page2ObjectName,Page3ObjectName",
 ```
 
 #### Configure Page-Specific Settings
-Create separate sections for each page if needed:
+Create separate sections for each page:
 ```json
-{
-  "pages": [
-    {
-      "name": "Page1",
-      "visuals": ["visual1", "visual2"]
+"sections": {
+      "Page1ObjectName": {
+      },
+      "Page2ObjectName": {
+      },
+      "Page3ObjectName": {
+      }
     },
-    {
-      "name": "Page2",
-      "visuals": ["visual3", "visual4"]
-    }
-  ]
-}
 ```
 
 ### 4. Save and Reload
 
-1. Save the JSON file
+1. Save the bookmark JSON file
 2. Open the `.pbip` file in Power BI Desktop
 3. Test your bookmark across different pages
 
-## Example Configuration
 
-Here's a complete example of a bookmark JSON that controls visuals across three pages:
 
-```json
-{
-  "name": "CrossPageBookmark",
-  "suppressActiveSession": true,
-  "targetVisualNames": [
-    "ChartVisual1",
-    "TableVisual2",
-    "CardVisual3"
-  ],
-  "activeSession": [
-    "Sales Overview",
-    "Regional Analysis",
-    "Trends"
-  ]
-}
-```
+## End
 
-## Benefits
-
-- **Time Savings:** Reduce hours of manual configuration to minutes
-- **Consistency:** Ensure uniform behavior across pages
-- **Maintainability:** Centralized bookmark logic in one place
-- **Flexibility:** Easy to update and extend
+**This technique transforms what could be hours of manual work into a 10 minutes configuration task, enabling cross-page bookmark functionality that was not possible before in the 10 years history of Power BI.**
 
 ## Troubleshooting
 
@@ -142,10 +106,6 @@ Here's a complete example of a bookmark JSON that controls visuals across three 
 - Validate JSON using a linter
 - Check for missing commas or brackets
 
-## Additional Resources
-
-- [Power BI Project Format Documentation](https://learn.microsoft.com/power-bi/developer/projects/projects-overview)
-- [Power BI Bookmarks Overview](https://learn.microsoft.com/power-bi/create-reports/desktop-bookmarks)
 
 ## Contributing
 
@@ -157,17 +117,7 @@ This guide is provided as-is for educational purposes.
 
 ---
 
-**Author:** [Your Name]  
+**Author:** [Mr. Syed Haider Ali Shah]  
 **Last Updated:** December 2025
 
 ---
-
-This version includes:
-- Clear structure with proper headings
-- Code examples with syntax highlighting
-- Troubleshooting section
-- Professional formatting suitable for GitHub
-- Markdown-friendly layout
-- Prerequisites and additional resources
-
-You can save this as `README.md` or create a dedicated markdown file in your repo!
